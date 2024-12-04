@@ -32,22 +32,49 @@
   
       // Array.prototype.map()
       // 2. Give us an array of the inventors first and last names
+      const fullNames = inventors.map((inventor) => `${inventor.first} ${inventor.last}`);
   
       // Array.prototype.sort()
       // 3. Sort the inventors by birthdate, oldest to youngest
+      const sortedByOldest = inventors.sort((inventor1, inventor2) => inventor1.year > inventor2.year ? 1 : -1);
   
       // Array.prototype.reduce()
       // 4. How many years did all the inventors live all together?
+      const yearsAlive = inventors.reduce((total, inventor) => total += (inventor.passed - inventor.year), 0);
   
       // 5. Sort the inventors by years lived
+      const sortByOldest = inventor.sort((inventor1, inventor2) => {
+        let inventor1Age = inventor1.passed - inventor1.year;
+        let inventor2Age = inventor2.passed - inventor2.year;
+        return inventor1Age >= inventor2Age ? -1 : 1;
+      })
   
       // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
       // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
-  
+      const category = document.querySelector('.mw-category');
+      const boulevardLinks = Array.from(category.querySelectorAll('a'));
+      const filteredBoulevardList = boulevardLinks
+        .map(link => link.textContent)
+        .filter(streetName => streetName.includes('de'));
+
   
       // 7. sort Exercise
       // Sort the people alphabetically by last name
+      
+      const alphabeticalOrder = people.sort((person1, person2) => {
+        const [lastName1, firstName1] = person1.split(', ');
+        const [lastName2, firstName2] = person2.split(', ');
+        return lastName1 < lastName2 ? -1 : 1;
+      })
   
       // 8. Reduce Exercise
       // Sum up the instances of each of these
       const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+      const transportationMap = new Map();
+      data.forEach((transport) => {
+        if (!transportationMap.has(transport)) {
+            transportationMap.set(transport, 0);
+        }
+        const currentValue = transportationMap.get(transport);
+        transportationMap.set(transport, currentValue + 1);
+      });
